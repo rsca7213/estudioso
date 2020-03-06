@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+body {
+    background-image: url('../../img/backgrounds/accessBackground.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-color: #A9B0BB;
+}
+
+.header {
+    font-size: 2.75rem;
+    color: #525252;
+    font-weight: bold;
+}
