@@ -41,9 +41,24 @@
                 <img src="{{ asset('img/welcome/image2.svg') }}" alt="img2" class="col-2 mx-4">
                 <img src="{{ asset('img/welcome/image3.svg') }}" alt="img3" class="col-2">
             </div>
-            <div class="row justify-content-center mt-4 pt-4">
-                <a href="{{ route('register') }}" class="btn btn-primary btn-lg"> ¡Registrarse Ahora! </a>
-            </div>
+                @auth
+                    <div class="row justify-content-center mt-4 pt-4">
+                        <a href="{{ route('home') }}" class="btn btn-lg btn-primary"> Ir a Inicio </a>
+                    </div>
+                    <div class="row justify-content-center pt-2">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();"> 
+                                <span class="text-primary"> {{ Auth::user()->name }}, Cerrar Sesión </span>
+                            </a>
+                        </form>
+                    </div>
+                    @else
+                    <div class="row justify-content-center mt-4 pt-4">
+                        <a href="{{ route('register') }}" class="btn btn-primary btn-lg"> ¡Registrarse Ahora! </a>
+                    </div>
+                @endauth
         </div>
     </body>
 </html>

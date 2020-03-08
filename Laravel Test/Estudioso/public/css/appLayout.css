@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+body {
+    background-image: url('../../img/backgrounds/appBackground.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    background-color: #F5F5F5;
+}
+
+.iconoApp {
+    max-width: 36px;
+    height: auto;
+}
