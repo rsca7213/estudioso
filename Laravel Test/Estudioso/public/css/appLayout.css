@@ -3,7 +3,7 @@
 body {
     background-size: cover;
     background-repeat: no-repeat;
-    overflow: hidden;
+    overflow-x: hidden;
     background-color: #EBEBEB;
 }
 

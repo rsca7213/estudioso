@@ -12,8 +12,12 @@ class CursosController extends Controller
     }
 
     public function agregar ($id) {
-        return view('cursos.agregar',[
-            'userid' => $id,
-        ]);
+
+        if ($id == auth()->user()->id) {
+            return view('cursos.agregar',[
+                'userid' => $id,
+            ]);
+        }
+        else return view('home');
     }
 }

@@ -22,14 +22,14 @@
                 <span class="h4"> Evaluaciones Proximas </span>
             </div>
             <div class="card-body" style="background-color: #F5F5F5">
-                <table class="table table-striped table-hover border border-muted"> 
+                <table class="table table-striped table-hover border border-secondary"> 
                     <thead class="thead-dark"> 
                         <tr>
                             <th scope="col"> # </th>
                             <th scope="col"> Curso </th>
                             <th scope="col"> Evaluación </th>
                             <th scope="col"> Fecha </th>
-                            <th scope="col" class="hidden d-none d-lg-block"> Ponderación </th>
+                            <th scope="col"> Ponderación </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,21 +38,21 @@
                             <td> Calculo IV </td>
                             <td> Parcial #3 </td>
                             <td> 15/05/2015 </td>
-                            <td class="hidden d-none d-lg-block"> 25% (5 puntos) </td>
+                            <td> 25% (5 puntos) </td>
                         </tr>
                         <tr style="transform: rotate(0);">
                             <th scope="row"> <a href="#" class="stretched-link text-dark"> 2 </a> </th>
                             <td> Programación II </td>
                             <td> Parcial #1 </td>
                             <td> 11/02/2017 </td>
-                            <td class="hidden d-none d-lg-block"> 50% (10 puntos) </td>
+                            <td> 50% (10 puntos) </td>
                         </tr>
                         <tr style="transform: rotate(0);">
                             <th scope="row"> <a href="#" class="stretched-link text-dark"> 3 </a> </th>
                             <td> Ecologia, Ambiente y Sustentabilidad </td>
                             <td> Trabajo #2 </td>
                             <td> 16/06/2016 </td>
-                            <td class="hidden d-none d-lg-block"> 10% (2 puntos) </td>
+                            <td> 10% (2 puntos) </td>
                         </tr>
                     </tbody>
                 </table>
