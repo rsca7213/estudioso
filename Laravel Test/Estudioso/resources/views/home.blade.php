@@ -7,7 +7,7 @@
 @section('navbar')
     <li> <a href="#" class="text-muted mx-4 text-nowrap"> Ver Cursos </a> </li>
     <span class="text-muted hidden d-none d-lg-block"> | </span>
-    <li> <a href="#" class="text-muted mx-4 text-nowrap"> Agregar Curso </a> </li>
+    <li> <a href="{{ route('agregarCurso', ['id'=> auth()->user()->id ]) }}" class="text-muted mx-4 text-nowrap"> Agregar Curso </a> </li>
     <span class="text-muted hidden d-none d-lg-block"> | </span>
     <li> <a href="#" class="text-muted mx-4 text-nowrap"> Calendario </a> </li>
     <span class="text-muted hidden d-none d-lg-block"> | </span>
@@ -17,12 +17,12 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="card">
-            <div class="card-header text-center">
+        <div class="card rounded-lg border border-light">
+            <div class="card-header text-center bg-dark text-light">
                 <span class="h4"> Evaluaciones Proximas </span>
             </div>
-            <div class="card-body">
-                <table class="table table-striped table-hover"> 
+            <div class="card-body" style="background-color: #F5F5F5">
+                <table class="table table-striped table-hover border border-muted"> 
                     <thead class="thead-dark"> 
                         <tr>
                             <th scope="col"> # </th>

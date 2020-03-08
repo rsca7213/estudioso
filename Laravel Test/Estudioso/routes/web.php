@@ -20,3 +20,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/cursos/agregar/{id}', 'CursosController@agregar')->name('agregarCurso');
