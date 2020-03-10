@@ -68,4 +68,35 @@ class EvaluacionesController extends Controller
         }
         return redirect('/');
     }
+
+    public function update (Request $request, $user_id, $curso_id, $ev_id) {
+        $auth = auth()->user();
+        $curso = Curso::FindOrFail($curso_id);
+        if($auth->id == $user_id && $curso->user_id == $user_id) {
+            $ev = Evaluacion::FindOrFail($ev_id);
+            if($ev->curso_id == $curso->id) {
+                $data = $request->validate([
+                    'nombreEv' => 'required|string',
+                    'fechaEv' => 'required|date',
+                    'porcEv' => 'numeric|min:1|max:99',
+                ]);
+
+                $porcentajeTotal = $data['porcEv'];
+                $evalActuales = $curso->evaluacions()->where('curso_id', $curso->id)->get();
+                foreach($evalActuales as $porc) {
+                    $porcentajeTotal += $porc->porcentaje;
+                }
+                $porcentajeTotal -= $ev->porcentaje;
+                if($porcentajeTotal <= 100) {
+                    $ev->update([
+                        'porcentaje' => $data['porcEv'],
+                        'nombre' => $data['nombreEv'],
+                        'fecha' => $data['fechaEv'],
+                    ]);
+                }
+
+                return redirect('/cursos/agregar/'.$user_id.'/'.$curso_id.'/evaluaciones');
+            }
+        }
+    }
 }

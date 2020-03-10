@@ -14,16 +14,16 @@
                             <form :action="actionLink" id="formEv" method="POST" v-on:submit="checkInputs">
                                 <input type="hidden" name="_token" v-bind:value="csrf">
                                 <label for="nombreEv" class="col-form-label text-md-right"> Nombre </label>
-                                <input id="nombreEv" type="text" class="form-control" name="nombreEv" v-model="nombreInput" :class="computedNombre">
+                                <input required id="nombreEv" type="text" class="form-control" name="nombreEv" v-model="nombreInput" :class="computedNombre">
                                 <span class="text-danger ml-2 text-center" v-if="computedNombre"> <b> El nombre no puede empezar/terminar con espacios <br> &nbsp; ni tener más de 2 seguidos.<br> </b> </span>
                                 <label for="fechaEv" class="col-form-label text-md-right"> Fecha </label>
-                                <input id="fechaEv" type="date" class="col-5 form-control" name="fechaEv">
+                                <input id="fechaEv" type="date" class="col-5 form-control" name="fechaEv" required>
                                 <label for="porcEv" class="col-form-label text-md-right"> Porcentaje </label>
                                 <div class="d-flex align-items-center">
-                                    <input id="porcEv" type="number" class="col-3 form-control" name="porcEv" v-model.number="porcInput" :class="computedPorc">
+                                    <input required id="porcEv" type="number" class="col-3 form-control" name="porcEv" v-model.number="porcInput" :class="computedPorc">
                                     <span class="ml-2"> % </span>
                                 </div>
-                                <span class="text-danger ml-2 text-center" v-if="parseInt(this.porc)+porcInput > 100"> <b> El porcentaje de las evaluaciones no debe sumar más de 100% </b> </span>
+                                <span class="text-danger ml-2 text-center" v-if="computedPorc === 'is-invalid'"> <b> El porcentaje de las evaluaciones no debe sumar más de 100% ni ser menor a 1% </b> </span>
                                 <div class="text-center"> <button type="submit" class="btn btn-primary mt-4" :class="computedBtn"> Agregar Evaluación </button> </div>
                             </form>
                         </div>
@@ -56,7 +56,7 @@
 
         data() {
             return {
-                porcInput: 0,
+                porcInput: null,
                 nombreInput: "",
                 errorPorcClass: "",
                 popup: false,
@@ -68,6 +68,7 @@
         computed: {
             computedPorc() {
                 if(parseInt(this.porc) + parseInt(this.porcInput) > 100) return 'is-invalid';
+                else if (this.porcInput < 1 && this.porcInput != null) return 'is-invalid';
                 else return '';
             },
 
@@ -86,6 +87,7 @@
             },
 
             computedBtn() {
+                if(this.porcInput < 1 && this.porcInput != null) return 'btn-danger disabled' 
                 if(parseInt(this.porc) + parseInt(this.porcInput) > 100) return 'btn-danger disabled';
                 if (this.nombreInput[0] === ' ' || this.nombreInput[this.nombreInput.length-1] === ' ') {
                     return 'btn-danger disabled';

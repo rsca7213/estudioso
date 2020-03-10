@@ -44,10 +44,6 @@ export default {
     props: ['evid','evn','evf','evp','csrf','userid','cursoid'],
 
     mounted() {
-        console.log('id->'+this.evid);
-        console.log('n->'+this.evn);
-        console.log('f->'+this.evf);
-        console.log('p->'+this.evp);
         console.log('Componente de borrar montado.');
     },
 

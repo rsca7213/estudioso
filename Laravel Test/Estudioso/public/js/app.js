@@ -1960,7 +1960,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      porcInput: 0,
+      porcInput: null,
       nombreInput: "",
       errorPorcClass: "",
       popup: false,
@@ -1970,7 +1970,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     computedPorc: function computedPorc() {
-      if (parseInt(this.porc) + parseInt(this.porcInput) > 100) return 'is-invalid';else return '';
+      if (parseInt(this.porc) + parseInt(this.porcInput) > 100) return 'is-invalid';else if (this.porcInput < 1 && this.porcInput != null) return 'is-invalid';else return '';
     },
     computedNombre: function computedNombre() {
       if (this.nombreInput[0] === ' ' || this.nombreInput[this.nombreInput.length - 1] === ' ') {
@@ -1986,6 +1986,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     computedBtn: function computedBtn() {
+      if (this.porcInput < 1 && this.porcInput != null) return 'btn-danger disabled';
       if (parseInt(this.porc) + parseInt(this.porcInput) > 100) return 'btn-danger disabled';
 
       if (this.nombreInput[0] === ' ' || this.nombreInput[this.nombreInput.length - 1] === ' ') {
@@ -2060,10 +2061,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['evid', 'evn', 'evf', 'evp', 'csrf', 'userid', 'cursoid'],
   mounted: function mounted() {
-    console.log('id->' + this.evid);
-    console.log('n->' + this.evn);
-    console.log('f->' + this.evf);
-    console.log('p->' + this.evp);
     console.log('Componente de borrar montado.');
   },
   methods: {
@@ -2143,13 +2140,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['evid', 'evn', 'evf', 'evp', 'csrf', 'userid', 'cursoid'],
   mounted: function mounted() {
-    console.log('id->' + this.evid);
-    console.log('n->' + this.evn);
-    console.log('f->' + this.evf);
-    console.log('p->' + this.evp);
     console.log('Componente de editar montado.');
   },
   methods: {
@@ -2161,10 +2160,36 @@ __webpack_require__.r(__webpack_exports__);
     return {
       image_src: '/img/icons/edit.svg',
       show_btn: false,
-      actionLink: "",
+      actionLink: "/cursos/agregar/" + this.userid + "/" + this.cursoid + "/evaluaciones/editar/" + this.evid,
       modal_id: "editModal" + this.evid,
-      modal_target: "#editModal" + this.evid
+      modal_target: "#editModal" + this.evid,
+      evnx: this.evn,
+      evpx: this.evp
     };
+  },
+  computed: {
+    computedNombre: function computedNombre() {
+      var evnx = this.evnx;
+
+      if (evnx[0] === ' ' || evnx[evnx.length - 1] === ' ') {
+        return 'is-invalid';
+      } else {
+        var i = 0;
+
+        for (i = 0; i < evnx.length - 1; i++) {
+          if (evnx[i] === ' ' && evnx[i + 1] === ' ') return 'is-invalid';
+        }
+
+        return false;
+      }
+    },
+    computedBtn: function computedBtn() {
+      if (this.computedNombre === 'is-invalid') return 'btn-danger disabled';else if (this.computedPorc === 'is-invalid') return 'btn-danger disabled';else return '';
+    },
+    computedPorc: function computedPorc() {
+      var evpx = this.evpx;
+      if (parseInt(this.evpx) > 100) return 'is-invalid';else if (this.evpx < 1 && this.evpx != null) return 'is-invalid';else return '';
+    }
   }
 });
 
@@ -37648,6 +37673,7 @@ var render = function() {
                         staticClass: "form-control",
                         class: _vm.computedNombre,
                         attrs: {
+                          required: "",
                           id: "nombreEv",
                           type: "text",
                           name: "nombreEv"
@@ -37682,7 +37708,12 @@ var render = function() {
                       _vm._v(" "),
                       _c("input", {
                         staticClass: "col-5 form-control",
-                        attrs: { id: "fechaEv", type: "date", name: "fechaEv" }
+                        attrs: {
+                          id: "fechaEv",
+                          type: "date",
+                          name: "fechaEv",
+                          required: ""
+                        }
                       }),
                       _vm._v(" "),
                       _c(
@@ -37708,6 +37739,7 @@ var render = function() {
                           staticClass: "col-3 form-control",
                           class: _vm.computedPorc,
                           attrs: {
+                            required: "",
                             id: "porcEv",
                             type: "number",
                             name: "porcEv"
@@ -37729,14 +37761,14 @@ var render = function() {
                         _c("span", { staticClass: "ml-2" }, [_vm._v(" % ")])
                       ]),
                       _vm._v(" "),
-                      parseInt(this.porc) + _vm.porcInput > 100
+                      _vm.computedPorc === "is-invalid"
                         ? _c(
                             "span",
                             { staticClass: "text-danger ml-2 text-center" },
                             [
                               _c("b", [
                                 _vm._v(
-                                  " El porcentaje de las evaluaciones no debe sumar más de 100% "
+                                  " El porcentaje de las evaluaciones no debe sumar más de 100% ni ser menor a 1% "
                                 )
                               ])
                             ]
@@ -38023,26 +38055,39 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: this.evn,
-                            expression: "this.evn"
+                            value: _vm.evnx,
+                            expression: "evnx"
                           }
                         ],
                         staticClass: "col-8 form-control mx-4",
+                        class: _vm.computedNombre,
                         attrs: {
+                          required: "",
                           id: "nombreEv",
                           type: "text",
                           name: "nombreEv"
                         },
-                        domProps: { value: this.evn },
+                        domProps: { value: _vm.evnx },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(this, "evn", $event.target.value)
+                            _vm.evnx = $event.target.value
                           }
                         }
-                      })
+                      }),
+                      _vm._v(" "),
+                      _vm.computedNombre === "is-invalid"
+                        ? _c(
+                            "span",
+                            {
+                              staticClass:
+                                "offset-2 col text-danger ml-4 text-center"
+                            },
+                            [_vm._m(2)]
+                          )
+                        : _vm._e()
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group row" }, [
@@ -38065,7 +38110,12 @@ var render = function() {
                           }
                         ],
                         staticClass: "col-6 form-control mx-4",
-                        attrs: { id: "fechaEv", type: "date", name: "fechaEv" },
+                        attrs: {
+                          required: "",
+                          id: "fechaEv",
+                          type: "date",
+                          name: "fechaEv"
+                        },
                         domProps: { value: this.evf },
                         on: {
                           input: function($event) {
@@ -38094,28 +38144,44 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: this.evp,
-                              expression: "this.evp"
+                              value: _vm.evpx,
+                              expression: "evpx"
                             }
                           ],
                           staticClass: "col-4 form-control ml-3",
+                          class: _vm.computedPorc,
                           attrs: {
+                            required: "",
                             id: "porcEv",
                             type: "number",
                             name: "porcEv"
                           },
-                          domProps: { value: this.evp },
+                          domProps: { value: _vm.evpx },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(this, "evp", $event.target.value)
+                              _vm.evpx = $event.target.value
                             }
                           }
                         }),
                         _vm._v(" "),
-                        _c("span", { staticClass: "ml-2" }, [_vm._v(" % ")])
+                        _c("span", { staticClass: "ml-2" }, [_vm._v(" % ")]),
+                        _vm._v(" "),
+                        _vm.computedPorc === "is-invalid"
+                          ? _c(
+                              "span",
+                              { staticClass: "text-danger ml-1 text-center" },
+                              [
+                                _c("b", [
+                                  _vm._v(
+                                    " El porcentaje de las evaluación no debe ser mayor a 100 % ni ser menor a 1% "
+                                  )
+                                ])
+                              ]
+                            )
+                          : _vm._e()
                       ])
                     ])
                   ]),
@@ -38140,7 +38206,7 @@ var render = function() {
                         attrs: {
                           type: "hidden",
                           name: "_method",
-                          value: "DELETE"
+                          value: "PATCH"
                         }
                       }),
                       _vm._v(" "),
@@ -38148,11 +38214,14 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-primary ml-2",
+                          class: _vm.computedBtn,
                           attrs: { type: "submit" }
                         },
                         [_vm._v(" Editar ")]
                       )
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(3)
                   ])
                 ]
               )
@@ -38191,6 +38260,29 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "ml-2 col-12" }, [
       _c("b", [_vm._v(" Datos de la Evaluación ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _vm._v(" El nombre no puede empezar/terminar con espacios "),
+      _c("br"),
+      _vm._v("   ni tener más de 2 seguidos."),
+      _c("br")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row text-justify" }, [
+      _c("p", [
+        _vm._v(
+          " Recuerda: El porcentaje de las evaluaciones no debe sumar mas de 100%. Si se envia un porcentaje invalido será rechazado por el sistema. "
+        )
+      ])
     ])
   }
 ]
