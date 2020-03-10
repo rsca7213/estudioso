@@ -20,7 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('agregar-evaluacion', require('./components/AgregarEvaluacion.vue').default);
-Vue.component('tabla-evaluaciones', require('./components/TablaEvaluaciones.vue').default);
+Vue.component('tabla-vacia', require('./components/tablaVacia.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

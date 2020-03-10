@@ -4,13 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cursos extends Model
+class Curso extends Model
 {
+    protected $guarded = [];
+
     public function user () {
         return $this->hasOne(User::class);
     }
 
-    public function evaluaciones () {
-        return $this->hasMany(Evaluacion::class)->latest();
+    public function evaluacions () {
+        return $this->hasMany(Evaluacion::class);
     }
 }

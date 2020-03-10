@@ -1942,38 +1942,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['userid', 'curso', 'csrf', 'porc'],
   mounted: function mounted() {
     console.log('Boton agregar evaluacion montado.');
   },
   methods: {
-    submitEv: function submitEv() {
-      document.getElementById("nombreEv").value = "";
-      document.getElementById("fechaEv").value = "";
-      document.getElementById("porcEv").value = "";
-      this.boton = !this.boton;
-      this.popup = !this.popup;
-      return false;
-    },
     agregarEv: function agregarEv() {
-      this.boton = !this.boton;
       this.popup = !this.popup;
+      this.boton = !this.boton;
+    },
+    checkInputs: function checkInputs(event) {
+      if (computedBtn() != '') event.preventDefault();
     }
   },
   data: function data() {
     return {
+      porcInput: 0,
+      nombreInput: "",
+      errorPorcClass: "",
       popup: false,
-      boton: true
+      boton: true,
+      actionLink: "/cursos/agregar/" + this.userid + "/" + this.curso + "/evaluaciones/crear"
     };
+  },
+  computed: {
+    computedPorc: function computedPorc() {
+      if (parseInt(this.porc) + parseInt(this.porcInput) > 100) return 'is-invalid';else return '';
+    },
+    computedNombre: function computedNombre() {
+      if (this.nombreInput[0] === ' ' || this.nombreInput[this.nombreInput.length - 1] === ' ') {
+        return 'is-invalid';
+      } else {
+        var i = 0;
+
+        for (i = 0; i < this.nombreInput.length - 1; i++) {
+          if (this.nombreInput[i] === ' ' && this.nombreInput[i + 1] === ' ') return 'is-invalid';
+        }
+
+        return false;
+      }
+    },
+    computedBtn: function computedBtn() {
+      if (parseInt(this.porc) + parseInt(this.porcInput) > 100) return 'btn-danger disabled';
+
+      if (this.nombreInput[0] === ' ' || this.nombreInput[this.nombreInput.length - 1] === ' ') {
+        return 'btn-danger disabled';
+      } else {
+        var i = 0;
+
+        for (i = 0; i < this.nombreInput.length - 1; i++) {
+          if (this.nombreInput[i] === ' ' && this.nombreInput[i + 1] === ' ') return 'btn-danger disabled';
+        }
+
+        return '';
+      }
+
+      return '';
+    }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TablaEvaluaciones.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TablaEvaluaciones.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/tablaVacia.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/tablaVacia.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1985,16 +2022,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['ciclos'],
   mounted: function mounted() {
-    console.log('componente de tabla montado.');
+    console.log('Componente de tabla vacia montado.');
   }
 });
 
@@ -37404,8 +37435,6 @@ var render = function() {
         ]
       },
       [
-        _c("hr", { staticClass: "bg-secondary mt-4" }),
-        _vm._v(" "),
         _c("div", { staticClass: "row justify-content-center" }, [
           _c("div", { staticClass: "col-9" }, [
             _c("div", { staticClass: "card" }, [
@@ -37422,15 +37451,19 @@ var render = function() {
                   _c(
                     "form",
                     {
-                      attrs: { action: "", id: "formEv" },
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.submitEv($event)
-                        }
-                      }
+                      attrs: {
+                        action: _vm.actionLink,
+                        id: "formEv",
+                        method: "POST"
+                      },
+                      on: { submit: _vm.checkInputs }
                     },
                     [
+                      _c("input", {
+                        attrs: { type: "hidden", name: "_token" },
+                        domProps: { value: _vm.csrf }
+                      }),
+                      _vm._v(" "),
                       _c(
                         "label",
                         {
@@ -37441,15 +37474,39 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c("input", {
-                        staticClass: "col-9 form-control",
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.nombreInput,
+                            expression: "nombreInput"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: _vm.computedNombre,
                         attrs: {
                           id: "nombreEv",
                           type: "text",
-                          name: "nombreEv",
-                          required: "",
-                          autocomplete: "nombreEv"
+                          name: "nombreEv"
+                        },
+                        domProps: { value: _vm.nombreInput },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.nombreInput = $event.target.value
+                          }
                         }
                       }),
+                      _vm._v(" "),
+                      _vm.computedNombre
+                        ? _c(
+                            "span",
+                            { staticClass: "text-danger ml-2 text-center" },
+                            [_vm._m(1)]
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "label",
@@ -37462,13 +37519,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("input", {
                         staticClass: "col-5 form-control",
-                        attrs: {
-                          id: "fechaEv",
-                          type: "date",
-                          name: "fechaEv",
-                          required: "",
-                          autocomplete: "fechaEv"
-                        }
+                        attrs: { id: "fechaEv", type: "date", name: "fechaEv" }
                       }),
                       _vm._v(" "),
                       _c(
@@ -37480,9 +37531,66 @@ var render = function() {
                         [_vm._v(" Porcentaje ")]
                       ),
                       _vm._v(" "),
-                      _vm._m(1),
+                      _c("div", { staticClass: "d-flex align-items-center" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model.number",
+                              value: _vm.porcInput,
+                              expression: "porcInput",
+                              modifiers: { number: true }
+                            }
+                          ],
+                          staticClass: "col-3 form-control",
+                          class: _vm.computedPorc,
+                          attrs: {
+                            id: "porcEv",
+                            type: "number",
+                            name: "porcEv"
+                          },
+                          domProps: { value: _vm.porcInput },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.porcInput = _vm._n($event.target.value)
+                            },
+                            blur: function($event) {
+                              return _vm.$forceUpdate()
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "ml-2" }, [_vm._v(" % ")])
+                      ]),
                       _vm._v(" "),
-                      _vm._m(2)
+                      parseInt(this.porc) + _vm.porcInput > 100
+                        ? _c(
+                            "span",
+                            { staticClass: "text-danger ml-2 text-center" },
+                            [
+                              _c("b", [
+                                _vm._v(
+                                  " El porcentaje de las evaluaciones no debe sumar más de 100% "
+                                )
+                              ])
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "text-center" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary mt-4",
+                            class: _vm.computedBtn,
+                            attrs: { type: "submit" }
+                          },
+                          [_vm._v(" Agregar Evaluación ")]
+                        )
+                      ])
                     ]
                   )
                 ]
@@ -37509,31 +37617,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex align-items-center" }, [
-      _c("input", {
-        staticClass: "col-2 form-control",
-        attrs: {
-          id: "porcEv",
-          type: "text",
-          name: "porcEv",
-          required: "",
-          autocomplete: "porcEv"
-        }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "ml-2" }, [_vm._v(" % ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c(
-        "button",
-        { staticClass: "btn btn-primary mt-4", attrs: { type: "submit" } },
-        [_vm._v(" Agregar Evaluación ")]
-      )
+    return _c("b", [
+      _vm._v(" El nombre no puede empezar/terminar con espacios "),
+      _c("br"),
+      _vm._v("   ni tener más de 2 seguidos."),
+      _c("br")
     ])
   }
 ]
@@ -37543,10 +37631,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TablaEvaluaciones.vue?vue&type=template&id=9c7ab42c&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TablaEvaluaciones.vue?vue&type=template&id=9c7ab42c& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/tablaVacia.vue?vue&type=template&id=2ad43e11&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/tablaVacia.vue?vue&type=template&id=2ad43e11& ***!
+  \*************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37558,40 +37646,29 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("th", { attrs: { scope: "row" } }, [_vm._v(" 1 ")]),
-      _vm._v(" "),
-      _c("td", [_vm._v(" Parcial #1 ")]),
-      _vm._v(" "),
-      _c("td", { staticClass: "text-center" }, [_vm._v(" 15/05/2015 ")]),
-      _vm._v(" "),
-      _c("td", { staticClass: "text-center" }, [_vm._v(" 28% ")]),
-      _vm._v(" "),
-      _c("td", { staticClass: "text-center" }, [
-        _c("span", [
-          _c("img", {
-            staticStyle: { width: "1.4rem" },
-            attrs: { src: "", alt: "editar" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("span", [
-          _c("img", {
-            staticStyle: { width: "1.4rem" },
-            attrs: { src: "", alt: "borrar" }
-          })
-        ])
+  return _c(
+    "div",
+    {
+      directives: [
+        {
+          name: "show",
+          rawName: "v-show",
+          value: this.ciclos == 0,
+          expression: "this.ciclos == 0"
+        }
+      ],
+      staticClass: "text-center"
+    },
+    [
+      _c("p", [
+        _vm._v(
+          " ¡Las evaluaciones del curso se iran colocando aquí a medida que se agregen! "
+        )
       ])
-    ])
-  }
-]
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -49781,7 +49858,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('agregar-evaluacion', __webpack_require__(/*! ./components/AgregarEvaluacion.vue */ "./resources/js/components/AgregarEvaluacion.vue")["default"]);
-Vue.component('tabla-evaluaciones', __webpack_require__(/*! ./components/TablaEvaluaciones.vue */ "./resources/js/components/TablaEvaluaciones.vue")["default"]);
+Vue.component('tabla-vacia', __webpack_require__(/*! ./components/tablaVacia.vue */ "./resources/js/components/tablaVacia.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49908,17 +49985,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/TablaEvaluaciones.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/TablaEvaluaciones.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/components/tablaVacia.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/tablaVacia.vue ***!
+  \************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _TablaEvaluaciones_vue_vue_type_template_id_9c7ab42c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TablaEvaluaciones.vue?vue&type=template&id=9c7ab42c& */ "./resources/js/components/TablaEvaluaciones.vue?vue&type=template&id=9c7ab42c&");
-/* harmony import */ var _TablaEvaluaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TablaEvaluaciones.vue?vue&type=script&lang=js& */ "./resources/js/components/TablaEvaluaciones.vue?vue&type=script&lang=js&");
+/* harmony import */ var _tablaVacia_vue_vue_type_template_id_2ad43e11___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tablaVacia.vue?vue&type=template&id=2ad43e11& */ "./resources/js/components/tablaVacia.vue?vue&type=template&id=2ad43e11&");
+/* harmony import */ var _tablaVacia_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tablaVacia.vue?vue&type=script&lang=js& */ "./resources/js/components/tablaVacia.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -49928,9 +50005,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _TablaEvaluaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _TablaEvaluaciones_vue_vue_type_template_id_9c7ab42c___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _TablaEvaluaciones_vue_vue_type_template_id_9c7ab42c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _tablaVacia_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _tablaVacia_vue_vue_type_template_id_2ad43e11___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _tablaVacia_vue_vue_type_template_id_2ad43e11___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -49940,38 +50017,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/TablaEvaluaciones.vue"
+component.options.__file = "resources/js/components/tablaVacia.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/TablaEvaluaciones.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/TablaEvaluaciones.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/tablaVacia.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/tablaVacia.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TablaEvaluaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./TablaEvaluaciones.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TablaEvaluaciones.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TablaEvaluaciones_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_tablaVacia_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./tablaVacia.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/tablaVacia.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_tablaVacia_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/TablaEvaluaciones.vue?vue&type=template&id=9c7ab42c&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/TablaEvaluaciones.vue?vue&type=template&id=9c7ab42c& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/tablaVacia.vue?vue&type=template&id=2ad43e11&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/tablaVacia.vue?vue&type=template&id=2ad43e11& ***!
+  \*******************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TablaEvaluaciones_vue_vue_type_template_id_9c7ab42c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./TablaEvaluaciones.vue?vue&type=template&id=9c7ab42c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TablaEvaluaciones.vue?vue&type=template&id=9c7ab42c&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TablaEvaluaciones_vue_vue_type_template_id_9c7ab42c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tablaVacia_vue_vue_type_template_id_2ad43e11___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./tablaVacia.vue?vue&type=template&id=2ad43e11& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/tablaVacia.vue?vue&type=template&id=2ad43e11&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tablaVacia_vue_vue_type_template_id_2ad43e11___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TablaEvaluaciones_vue_vue_type_template_id_9c7ab42c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_tablaVacia_vue_vue_type_template_id_2ad43e11___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
