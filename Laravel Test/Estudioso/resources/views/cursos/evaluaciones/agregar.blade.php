@@ -46,8 +46,12 @@
                                         <td class="text-center"> {{ date('d/m/Y', strtotime($evaluacion->fecha)) }} </td>
                                         <td class="text-center"> {{ $evaluacion->porcentaje }}% </td>
                                         <td class="text-center"> 
-                                            <span> <img src="{{ asset('img/icons/edit.svg') }}" alt="editar" style="width: 1.4rem;"> </span>
-                                            <span> <img src="{{ asset('img/icons/trash.svg') }}" alt="borrar" style="width: 1.4rem;"> </span>
+                                            <editar-evaluacion evid="{{$evaluacion->id}}" evn="{{$evaluacion->nombre}}" 
+                                                evf="{{$evaluacion->fecha}}" evp="{{$evaluacion->porcentaje}}" 
+                                                csrf="{{csrf_token()}}" userid="{{ $user_id }}" cursoid="{{ $curso->id }}"> </editar-evaluacion>
+                                            <borrar-evaluacion evid="{{$evaluacion->id}}" evn="{{$evaluacion->nombre}}" 
+                                            evf="{{date('d/m/Y', strtotime($evaluacion->fecha))}}" evp="{{$evaluacion->porcentaje}}" 
+                                            csrf="{{csrf_token()}}" userid="{{ $user_id }}" cursoid="{{ $curso->id }}"> </borrar-evaluacion>
                                         </td>
                                     </tr>
                                     <span style="visibility: hidden;"> {{ $porc += $evaluacion->porcentaje }} </span>

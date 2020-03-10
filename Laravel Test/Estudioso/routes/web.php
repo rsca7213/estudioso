@@ -25,3 +25,4 @@ Route::get('/cursos/agregar/{id}', 'CursosController@create')->name('agregarCurs
 Route::post('/cursos/agregar/{id}/crear', 'CursosController@store')->name('crearCurso');
 Route::get('/cursos/agregar/{user_id}/{curso_id}/evaluaciones', 'EvaluacionesController@create')->name('crearCursoEvaluaciones');
 Route::post('/cursos/agregar/{user_id}/{curso_id}/evaluaciones/crear', 'EvaluacionesController@store');
+Route::delete('/cursos/agregar/{user_id}/{curso_id}/evaluaciones/borrar/{ev_id}', 'EvaluacionesController@destroy');

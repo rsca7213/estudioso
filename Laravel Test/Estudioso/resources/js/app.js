@@ -19,8 +19,10 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('agregar-evaluacion', require('./components/AgregarEvaluacion.vue').default);
+Vue.component('agregar-evaluacion', require('./components/agregarEvaluacion.vue').default);
 Vue.component('tabla-vacia', require('./components/tablaVacia.vue').default);
+Vue.component('editar-evaluacion', require('./components/editarEvaluacion.vue').default);
+Vue.component('borrar-evaluacion', require('./components/borrarEvaluacion.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

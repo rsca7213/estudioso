@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Curso;
+use App\Evaluacion;
 
 class EvaluacionesController extends Controller
 {
@@ -42,11 +43,29 @@ class EvaluacionesController extends Controller
                 ]);
             }
 
-            return view('cursos.evaluaciones.agregar', [
+            /*return view('cursos.evaluaciones.agregar', [
                 'user_id' => $user_id,
                 'curso' => $curso
-            ]);
+            ]);*/
+            return redirect('/cursos/agregar/'.$user_id.'/'.$curso_id.'/evaluaciones');
         }
         else return redirect('/');
+    }
+
+    public function destroy (Request $request, $user_id, $curso_id, $ev_id) {
+        $auth = auth()->user();
+        $curso = Curso::FindOrFail($curso_id);
+        if($auth->id == $user_id && $curso->user_id == $user_id) {
+            $ev = Evaluacion::FindOrFail($ev_id);
+            if($ev->curso_id == $curso->id) {
+                Evaluacion::destroy($ev->id);
+                /*return view('cursos.evaluaciones.agregar', [
+                    'user_id' => $user_id,
+                    'curso' => $curso
+                ]);*/
+                return redirect('/cursos/agregar/'.$user_id.'/'.$curso_id.'/evaluaciones');
+            }
+        }
+        return redirect('/');
     }
 }
