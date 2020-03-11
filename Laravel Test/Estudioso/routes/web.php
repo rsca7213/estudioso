@@ -27,3 +27,5 @@ Route::get('/cursos/agregar/{user_id}/{curso_id}/evaluaciones', 'EvaluacionesCon
 Route::post('/cursos/agregar/{user_id}/{curso_id}/evaluaciones/crear', 'EvaluacionesController@store');
 Route::delete('/cursos/agregar/{user_id}/{curso_id}/evaluaciones/borrar/{ev_id}', 'EvaluacionesController@destroy');
 Route::patch('/cursos/agregar/{user_id}/{curso_id}/evaluaciones/editar/{ev_id}', 'EvaluacionesController@update');
+Route::get('/cursos/ver/{user_id}', 'CursosController@index')->name('verCursos');
+Route::delete('/cursos/ver/{user_id}/borrar/{curso_id}', 'CursosController@destroy');

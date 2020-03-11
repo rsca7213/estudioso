@@ -5,13 +5,13 @@
 @endsection
 
 @section('navbar')
-    <li> <a href="#" class="text-muted mx-4 text-nowrap"> Ver Cursos </a> </li>
+    <li> <a href="{{ route('verCursos', ['user_id' => auth()->user()->id]) }}" class="text-muted mx-4 text-nowrap"> Ver Cursos </a> </li>
     <span class="text-muted hidden d-none d-lg-block"> | </span>
     <li> <a href="{{ route('agregarCurso', ['id'=> auth()->user()->id ]) }}" class="text-muted mx-4 text-nowrap"> Agregar Curso </a> </li>
     <span class="text-muted hidden d-none d-lg-block"> | </span>
     <li> <a href="#" class="text-muted mx-4 text-nowrap"> Calendario </a> </li>
     <span class="text-muted hidden d-none d-lg-block"> | </span>
-    <li> <a href="{{ route('home') }}" class="text-dark mx-4 text-nowrap"> Menú Principal </a> </li>
+    <li> <a href="{{ route('home') }}" class="text-dark mx-4 text-nowrap"> <u> Menú Principal </u> </a> </li>
 @endsection
 
 @section('content')
