@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Curso;
 use App\Evaluacion;
+use App\User;
 
 class EvaluacionesController extends Controller
 {
@@ -98,5 +99,43 @@ class EvaluacionesController extends Controller
                 return redirect('/cursos/agregar/'.$user_id.'/'.$curso_id.'/evaluaciones');
             }
         }
+    }
+
+    public function index ($user_id, $curso_id) {
+        $user = User::findOrFail($user_id);
+        $curso = Curso::findOrFail($curso_id);
+        if ($user_id == auth()->user()->id) {
+            if ($curso->user_id == auth()->user()->id) {
+                $evs = $curso->evaluacions()->where('curso_id', $curso->id)->get();
+                return view('cursos.evaluaciones.ver', [
+                    'user' => $user,
+                    'curso' => $curso,
+                    'evs' => $evs
+                ]);
+            } 
+            else return redirect('/');
+        }
+        else return redirect('/');
+    }
+
+    public function calificacion (Request $request, $user_id, $curso_id, $ev_id) {
+        $user = User::findOrFail($user_id);
+        $curso = Curso::findOrFail($curso_id);
+        $ev = Evaluacion::findOrFail($ev_id);
+        if($user == auth()->user() && $curso->user_id == $user->id && $ev->curso_id == $curso->id) {
+            $data = $request->validate([
+                'califEv' => 'numeric|min:0|max:20',
+            ]);
+            $ev->update([
+                'calificacion' => $data['califEv'],
+            ]);
+            $evs = $curso->evaluacions()->where('curso_id', $curso->id)->get();
+            return view('cursos.evaluaciones.ver', [
+                'user' => $user,
+                'curso' => $curso,
+                'evs' => $evs
+            ]);
+        }
+        else return redirect('/');
     }
 }

@@ -4,9 +4,9 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-window.Vue = require('vue');
+window.Vue = require("vue");
 
 /**
  * The following block of code may be used to automatically register your
@@ -19,12 +19,34 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('agregar-evaluacion', require('./components/cursos/agregar/agregarEvaluacion.vue').default);
-Vue.component('tabla-vacia', require('./components/cursos/agregar/tablaVacia.vue').default);
-Vue.component('editar-evaluacion', require('./components/cursos/agregar/editarEvaluacion.vue').default);
-Vue.component('borrar-evaluacion', require('./components/cursos/agregar/borrarEvaluacion.vue').default);
-Vue.component('borrar-button', require('./components/cursos/ver/borrarBtn.vue').default);
-Vue.component('sin-cursos', require('./components/cursos/ver/sinCursos.vue').default);
+Vue.component(
+    "agregar-evaluacion",
+    require("./components/cursos/agregar/agregarEvaluacion.vue").default
+);
+Vue.component(
+    "tabla-vacia",
+    require("./components/cursos/agregar/tablaVacia.vue").default
+);
+Vue.component(
+    "editar-evaluacion",
+    require("./components/cursos/agregar/editarEvaluacion.vue").default
+);
+Vue.component(
+    "borrar-evaluacion",
+    require("./components/cursos/agregar/borrarEvaluacion.vue").default
+);
+Vue.component(
+    "borrar-button",
+    require("./components/cursos/ver/borrarBtn.vue").default
+);
+Vue.component(
+    "sin-cursos",
+    require("./components/cursos/ver/sinCursos.vue").default
+);
+Vue.component(
+    "calif-comp",
+    require("./components/evaluaciones/ver/calificacion.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -33,5 +55,5 @@ Vue.component('sin-cursos', require('./components/cursos/ver/sinCursos.vue').def
  */
 
 const app = new Vue({
-    el: '#app',
+    el: "#app"
 });

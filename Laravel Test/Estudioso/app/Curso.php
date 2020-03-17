@@ -13,6 +13,6 @@ class Curso extends Model
     }
 
     public function evaluacions () {
-        return $this->hasMany(Evaluacion::class);
+        return $this->hasMany(Evaluacion::class)->orderBy('fecha', 'ASC');
     }
 }

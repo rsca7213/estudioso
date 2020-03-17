@@ -34,9 +34,9 @@
                         <div class="row align-items-baseline d-flex justify-content-between">
                             <div class="h4 mx-4"><b>{{ $loop->iteration }}: </b> {{ $curso->nombre }}</div> 
                             <div class="ml-4">
-                                <button class="btn btn-primary btn-lg"> Ver Evaluaciones </button>
+                                <a class="btn btn-primary btn-lg" href="{{ route('verEvaluaciones', ['user_id' => auth()->user()->id, 'curso_id' => $curso->id]) }}"> Ver Evaluaciones </a>
                                 <borrar-button c_id="{{ $curso->id }}" c_n="{{ $curso->nombre }}" u_id="{{ $user_id }}" csrf="{{ csrf_token() }}"> </borrar-button> 
-                            </div>               
+                            </div>          
                         </div>
                     @endforeach
                     <sin-cursos ex="{{ $existe }}"> </sin-cursos>
