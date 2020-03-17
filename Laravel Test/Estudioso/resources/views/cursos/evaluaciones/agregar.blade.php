@@ -21,7 +21,7 @@
             <div class="col-sm-12 col-md-12 col-lg-9 col-xl-8">
                 <div class="card rounded-lg border border-light">
                     <div class="card-header text-center bg-dark text-light">
-                        <span class="h4"> {{ $curso->nombre }}: Agregar Evaluaciones </span>
+                        <span class="h4"> {{ $curso->nombre }}: Evaluaciones </span>
                     </div>
                         <div class="card-body justify-content-center border border-secondary" style="background-color: #F5F5F5">
                             <table class="table table-striped table-hover border border-secondary"> 

@@ -51933,13 +51933,15 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  */
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+//Cursos
 
 Vue.component("agregar-evaluacion", __webpack_require__(/*! ./components/cursos/agregar/agregarEvaluacion.vue */ "./resources/js/components/cursos/agregar/agregarEvaluacion.vue")["default"]);
 Vue.component("tabla-vacia", __webpack_require__(/*! ./components/cursos/agregar/tablaVacia.vue */ "./resources/js/components/cursos/agregar/tablaVacia.vue")["default"]);
 Vue.component("editar-evaluacion", __webpack_require__(/*! ./components/cursos/agregar/editarEvaluacion.vue */ "./resources/js/components/cursos/agregar/editarEvaluacion.vue")["default"]);
 Vue.component("borrar-evaluacion", __webpack_require__(/*! ./components/cursos/agregar/borrarEvaluacion.vue */ "./resources/js/components/cursos/agregar/borrarEvaluacion.vue")["default"]);
 Vue.component("borrar-button", __webpack_require__(/*! ./components/cursos/ver/borrarBtn.vue */ "./resources/js/components/cursos/ver/borrarBtn.vue")["default"]);
-Vue.component("sin-cursos", __webpack_require__(/*! ./components/cursos/ver/sinCursos.vue */ "./resources/js/components/cursos/ver/sinCursos.vue")["default"]);
+Vue.component("sin-cursos", __webpack_require__(/*! ./components/cursos/ver/sinCursos.vue */ "./resources/js/components/cursos/ver/sinCursos.vue")["default"]); //Evaluaciones
+
 Vue.component("calif-comp", __webpack_require__(/*! ./components/evaluaciones/ver/calificacion.vue */ "./resources/js/components/evaluaciones/ver/calificacion.vue")["default"]);
 Vue.component("borrar-curso", __webpack_require__(/*! ./components/evaluaciones/ver/borrarCursoBtn.vue */ "./resources/js/components/evaluaciones/ver/borrarCursoBtn.vue")["default"]);
 Vue.component("info-button", __webpack_require__(/*! ./components/evaluaciones/ver/infoCurso.vue */ "./resources/js/components/evaluaciones/ver/infoCurso.vue")["default"]);

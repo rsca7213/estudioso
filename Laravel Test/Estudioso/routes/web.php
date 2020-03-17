@@ -21,14 +21,21 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//Cursos: Agregar
 Route::get('/cursos/agregar/{id}', 'CursosController@create')->name('agregarCurso');
 Route::post('/cursos/agregar/{id}/crear', 'CursosController@store')->name('crearCurso');
+
+//Cursos: Agregar/Editar/Borrar Evaluaciones
 Route::get('/cursos/agregar/{user_id}/{curso_id}/evaluaciones', 'EvaluacionesController@create')->name('crearCursoEvaluaciones');
 Route::post('/cursos/agregar/{user_id}/{curso_id}/evaluaciones/crear', 'EvaluacionesController@store');
 Route::delete('/cursos/agregar/{user_id}/{curso_id}/evaluaciones/borrar/{ev_id}', 'EvaluacionesController@destroy');
 Route::patch('/cursos/agregar/{user_id}/{curso_id}/evaluaciones/editar/{ev_id}', 'EvaluacionesController@update');
+
+//Cursos: Ver/Borrar
 Route::get('/cursos/ver/{user_id}', 'CursosController@index')->name('verCursos');
 Route::delete('/cursos/ver/{user_id}/borrar/{curso_id}', 'CursosController@destroy');
+
+//Evaluaciones: Calificacion/Ver/Informacion
 Route::get('/cursos/ver/{user_id}/evaluaciones/{curso_id}', 'EvaluacionesController@index')->name('verEvaluaciones');
 Route::patch('/cursos/ver/{user_id}/evaluaciones/{curso_id}/calificacion/{ev_id}', 'EvaluacionesController@calificacion');
 Route::get('/cursos/ver/{user_id}/evaluaciones/{curso_id}/info', 'EvaluacionesController@info');
