@@ -39,6 +39,6 @@ class User extends Authenticatable
     ];
 
     public function cursos () {
-        return $this->hasMany(Curso::class)->latest();
+        return $this->hasMany(Curso::class);
     }
 }

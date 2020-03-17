@@ -39,7 +39,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <span style="display: none">{{ $existe = false }} </span>
                         @foreach ($evs as $ev)
+                        <span style="display: none">{{ $existe = true }} </span>
                         <tr>
                             <th scope="row"> {{ $loop->iteration }} </th>
                             <td> {{ $ev->nombre }} </td>
@@ -55,11 +57,12 @@
                          @endforeach
                     </tbody>
                 </table>
+                <sin-evaluaciones ex="{{ $existe }}"> </sin-evaluaciones>
             </div>
             <div class="card-footer bg-dark text-light d-flex justify-content-between">
-                <button class="btn btn-danger mx-3"> Borrar Curso </button>
-                <button class="btn btn-secondary mx-3"> Editar Curso </button>
-                <button class="btn btn-primary mx-3"> Información del Curso </button>
+                <borrar-curso uid="{{ $user->id }}" cid="{{ $curso->id }}" csrf="{{ csrf_token() }}" cn="{{ $curso->nombre }}"> </borrar-curso>
+                <a href="/cursos/agregar/{{$user->id}}/{{$curso->id}}/evaluaciones" class="btn btn-secondary mx-3"> Editar Curso </a>
+                <info-button cid="{{ $curso->id }}" cn="{{ $curso->nombre}}" uid="{{ $user->id }}"> </info-button>
             </div>
         </div>
     </div>

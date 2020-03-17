@@ -31,3 +31,4 @@ Route::get('/cursos/ver/{user_id}', 'CursosController@index')->name('verCursos')
 Route::delete('/cursos/ver/{user_id}/borrar/{curso_id}', 'CursosController@destroy');
 Route::get('/cursos/ver/{user_id}/evaluaciones/{curso_id}', 'EvaluacionesController@index')->name('verEvaluaciones');
 Route::patch('/cursos/ver/{user_id}/evaluaciones/{curso_id}/calificacion/{ev_id}', 'EvaluacionesController@calificacion');
+Route::get('/cursos/ver/{user_id}/evaluaciones/{curso_id}/info', 'EvaluacionesController@info');

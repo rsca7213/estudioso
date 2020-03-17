@@ -138,4 +138,31 @@ class EvaluacionesController extends Controller
         }
         else return redirect('/');
     }
+
+    public function info ($user_id, $curso_id) {
+        $user = User::findOrFail($user_id);
+        $curso = Curso::findOrFail($curso_id);
+        if(auth()->user() == $user && $curso->user_id == $user->id) {
+            $evs = $curso->evaluacions()->where('curso_id', $curso->id)->get();
+            $data = [];
+            $TotSE = 100;
+            $TotEv = 0;
+            $TotOb = 0;
+            $TotPe = 0;
+            foreach($evs as $ev) {
+                if($ev->calificacion != null) {
+                    $TotEv += $ev->porcentaje;
+                    $TotSE -= $ev->porcentaje;
+                    $TotOb += (($ev->calificacion * $ev->porcentaje)/20);
+                    $TotPe += ($ev->porcentaje - (($ev->calificacion * $ev->porcentaje)/20));
+                } 
+            }
+            $data['TotEv'] = $TotEv;
+            $data['TotSE'] = $TotSE;
+            $data['TotOb'] = $TotOb;
+            $data['TotPe'] = $TotPe;
+            return $data;
+        }
+        else return redirect ('/');
+    }
 }
