@@ -39,3 +39,8 @@ Route::delete('/cursos/ver/{user_id}/borrar/{curso_id}', 'CursosController@destr
 Route::get('/cursos/ver/{user_id}/evaluaciones/{curso_id}', 'EvaluacionesController@index')->name('verEvaluaciones');
 Route::patch('/cursos/ver/{user_id}/evaluaciones/{curso_id}/calificacion/{ev_id}', 'EvaluacionesController@calificacion');
 Route::get('/cursos/ver/{user_id}/evaluaciones/{curso_id}/info', 'EvaluacionesController@info');
+
+//Perfil: Editar
+Route::get('/perfil/{user_id}', 'PerfilesController@index');
+Route::patch('/perfil/{user_id}/editar', 'PerfilesController@update');
+Route::get('/perfil/{user_id}/s', 'PerfilesController@success');

@@ -49,13 +49,13 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     
-                                    <a class="dropdown-item" href="#"
+                                    <a class="dropdown-item" href="/perfil/{{auth()->user()->id}}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('perfil-form').submit();">
                                         {{ __('Ver Mi Perfil') }}
                                     </a>
 
-                                    <form id="perfil-form" action="#" method="GET" style="display: none;">
+                                    <form id="perfil-form" action="/perfil/{{auth()->user()->id}}" method="GET" style="display: none;">
                                         @csrf
                                     </form>
 
