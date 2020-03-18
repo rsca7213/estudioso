@@ -33,6 +33,9 @@ Vue.component("borrar-curso", require("./components/evaluaciones/ver/borrarCurso
 Vue.component("info-button", require("./components/evaluaciones/ver/infoCurso.vue").default);
 Vue.component("sin-evaluaciones", require("./components/evaluaciones/ver/sinEvaluaciones.vue").default);
 
+//Home
+Vue.component("dias-evaluacion", require("./components/home/diasEvaluacion.vue").default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

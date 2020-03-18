@@ -19,6 +19,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
+//Home: Evaluaciones Proximas
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Cursos: Agregar

@@ -26,7 +26,7 @@ class EvaluacionesController extends Controller
             $data = $request->validate([
                 'nombreEv' => 'required|string',
                 'fechaEv' => 'required|date',
-                'porcEv' => 'numeric|min:1|max:99',
+                'porcEv' => 'numeric|min:1|max:100',
             ]);
 
             $porcentajeTotal = $data['porcEv'];
@@ -79,7 +79,7 @@ class EvaluacionesController extends Controller
                 $data = $request->validate([
                     'nombreEv' => 'required|string',
                     'fechaEv' => 'required|date',
-                    'porcEv' => 'numeric|min:1|max:99',
+                    'porcEv' => 'numeric|min:1|max:100',
                 ]);
 
                 $porcentajeTotal = $data['porcEv'];
