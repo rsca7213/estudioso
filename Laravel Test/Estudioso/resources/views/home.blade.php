@@ -33,29 +33,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr style="transform: rotate(0);">
-                            <th scope="row"> <a href="#" class="stretched-link text-dark"> 1 </a> </th>
-                            <td> Calculo IV </td>
-                            <td> Parcial #3 </td>
-                            <td> 15/05/2015 </td>
-                            <td> 25% (5 puntos) </td>
-                        </tr>
-                        <tr style="transform: rotate(0);">
-                            <th scope="row"> <a href="#" class="stretched-link text-dark"> 2 </a> </th>
-                            <td> Programación II </td>
-                            <td> Parcial #1 </td>
-                            <td> 11/02/2017 </td>
-                            <td> 50% (10 puntos) </td>
-                        </tr>
-                        <tr style="transform: rotate(0);">
-                            <th scope="row"> <a href="#" class="stretched-link text-dark"> 3 </a> </th>
-                            <td> Ecologia, Ambiente y Sustentabilidad </td>
-                            <td> Trabajo #2 </td>
-                            <td> 16/06/2016 </td>
-                            <td> 10% (2 puntos) </td>
-                        </tr>
+                        <span style="visibility: hidden;"> {{ $existe = "En estos momentos no tiene evaluaciones próximas." }}</span>
+                        @foreach ($evs as $ev)
+                            <span style="visibility: hidden;"> {{ $existe = "" }}</span>
+                            <tr style="transform: rotate(0);">
+                                <th scope="row"> <a href="/cursos/ver/{{auth()->user()->id}}/evaluaciones/{{$cursos[$loop->index]->id}}" class="stretched-link text-dark"> {{$loop->iteration}} </a> </th>
+                                <td> {{ $cursos[$loop->index]->nombre }} </td>
+                                <td> {{ $ev['nombre'] }} </td>
+                                <td>
+                                    {{ date('d/m/Y', strtotime($ev['fecha'])) }} 
+                                    <dias-evaluacion dias="{{ $dias[$loop->index] }}"> </dias-evaluacion> 
+                                </td>
+                                <td> {{ $ev['porcentaje'] }}% ({{ $ev['porcentaje']*20/100 }} puntos de 20)</td>
+                            </tr>
+                            @if ($loop->iteration == 7) @break @endif
+                        @endforeach
                     </tbody>
                 </table>
+                <span class="text-center"> {{ $existe }} </span>
+            </div>
+            <div class="card-footer bg-dark text-light d-flex justify-content-between">
+                <a href="#" class="btn btn-secondary mx-3"> Ver Calendario </a>
+                <div>
+                    <a href="{{ route('agregarCurso', ['id'=> auth()->user()->id ]) }}" class="btn btn-secondary mx-3"> Agregar Curso </a>
+                    <a href="{{ route('verCursos', ['user_id' => auth()->user()->id]) }}" class="btn btn-primary mx-3"> Ver Cursos </a>
+                </div>
             </div>
         </div>
     </div>
