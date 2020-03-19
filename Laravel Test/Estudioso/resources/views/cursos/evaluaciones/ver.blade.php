@@ -12,7 +12,7 @@
     <li> <a href="{{ route('agregarCurso', ['id'=> auth()->user()->id]) }}" class="text-muted">Agregar Curso </a> </li>
     <span class="text-muted hidden d-none d-lg-block mx-4"> | </span>
     <span class="text-muted hidden d-none d-md-block d-lg-none mx-2"> | </span>
-    <li> <a href="#" class="text-muted">Calendario </a> </li>
+    <li> <a href="{{ route('calendario', ['user_id' => auth()->user()->id, 'pag' => 0  ]) }}" class="text-muted">Calendario </a> </li>
     <span class="text-muted hidden d-none d-lg-block mx-4"> | </span>
     <span class="text-muted hidden d-none d-md-block d-lg-none mx-2"> | </span>
     <li> <a href="{{ route('home') }}" class="text-muted">Menú Principal </a> </li>

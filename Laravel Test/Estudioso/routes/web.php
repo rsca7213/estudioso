@@ -45,3 +45,6 @@ Route::get('/cursos/ver/{user_id}/evaluaciones/{curso_id}/info', 'EvaluacionesCo
 Route::get('/perfil/{user_id}', 'PerfilesController@index');
 Route::patch('/perfil/{user_id}/editar', 'PerfilesController@update');
 Route::get('/perfil/{user_id}/s', 'PerfilesController@success');
+
+//Calendario: Ver
+Route::get('/calendario/{user_id}/{pag}', 'CalendarioController@index')->name('calendario');

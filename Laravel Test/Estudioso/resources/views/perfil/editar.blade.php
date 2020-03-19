@@ -2,6 +2,7 @@
 
 @section('title')
     <title> Estudioso | Editar Perfil </title>
+    <link rel="icon" href="{{ asset('img/favicon.png') }}">
 @endsection
 
 @section('navbar')
@@ -9,7 +10,7 @@
     <span class="text-muted hidden d-none d-lg-block"> | </span>
     <li> <a href="{{ route('agregarCurso', ['id'=> auth()->user()->id ]) }}" class="text-muted mx-4 text-nowrap"> Agregar Curso </a> </li>
     <span class="text-muted hidden d-none d-lg-block"> | </span>
-    <li> <a href="#" class="text-muted mx-4 text-nowrap"> Calendario </a> </li>
+    <li> <a href="{{ route('calendario', ['user_id' => auth()->user()->id, 'pag' => 0  ]) }}" class="text-muted mx-4 text-nowrap"> Calendario </a> </li>
     <span class="text-muted hidden d-none d-lg-block"> | </span>
     <li> <a href="{{ route('home') }}" class="text-muted mx-4 text-nowrap"> Menú Principal </a> </li>
 @endsection
